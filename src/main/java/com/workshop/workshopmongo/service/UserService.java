@@ -1,6 +1,7 @@
 package com.workshop.workshopmongo.service;
 
 import com.workshop.workshopmongo.domains.User;
+import com.workshop.workshopmongo.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.workshop.workshopmongo.repository.UserRepository;
@@ -17,6 +18,7 @@ public class UserService {
     public List<User> findAll(){
         return repo.findAll();
     }
+
     public User findById(String id){
         Optional<User> user = repo.findById(id);
         if (user.isEmpty()){
@@ -24,4 +26,14 @@ public class UserService {
         }
         return user.get();
     }
+
+    public User insert(User obj){
+        return repo.insert(obj);
+    }
+
+    public User fromDto(UserDTO obj){
+        return new User(obj.getId(), obj.getName(), obj.getEmail());
+    }
+
+
 }
