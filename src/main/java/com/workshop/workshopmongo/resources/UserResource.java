@@ -4,10 +4,7 @@ import com.workshop.workshopmongo.domains.User;
 import com.workshop.workshopmongo.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.workshop.workshopmongo.service.UserService;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -37,7 +34,7 @@ public class UserResource {
     }
 
     @RequestMapping(method= RequestMethod.POST)
-    public ResponseEntity<Void> insert(@PathVariable UserDTO ojDto){
+    public ResponseEntity<Void> insert(@RequestBody UserDTO ojDto){
         User obj = service.fromDto(ojDto);
         obj = service.insert(obj);
 
@@ -45,4 +42,9 @@ public class UserResource {
         return  ResponseEntity.created(uri).build();
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
