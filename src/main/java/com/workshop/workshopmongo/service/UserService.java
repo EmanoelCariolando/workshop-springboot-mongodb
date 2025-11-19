@@ -40,4 +40,16 @@ public class UserService {
         repo.deleteById(id);
     }
 
+    public User update(User obj) {
+        User entity = repo.findById(obj.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        updateData(entity, obj);
+        return repo.save(entity);
+    }
+
+    private void updateData(User entity, User obj) {
+        entity.setName(obj.getName());
+        entity.setEmail(obj.getEmail());
+        // ... e o que mais você quiser atualizar
+    }
 }
