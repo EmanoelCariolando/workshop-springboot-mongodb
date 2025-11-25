@@ -1,8 +1,11 @@
 package com.workshop.workshopmongo.domains;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Document
@@ -14,7 +17,16 @@ public class User implements Serializable {
     private String name;
     private String email;
 
-    public User(){
+    @DBRef(lazy = true)
+    private List<Post> postList = new ArrayList<>();
+
+      public User(){
+    }
+
+    public User( String id, String name,String email) {
+        this.email = email;
+        this.id = id;
+        this.name = name;
     }
 
     public String getEmail() {
@@ -41,10 +53,12 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public User( String id, String name,String email) {
-        this.email = email;
-        this.id = id;
-        this.name = name;
+    public List<Post> getPostList() {
+        return postList;
+    }
+
+    public void setPostList(List<Post> postList) {
+        this.postList = postList;
     }
 
     @Override
